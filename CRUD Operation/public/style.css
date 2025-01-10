@@ -1,0 +1,12 @@
+body{
+    border-color: darkseagreen;
+}
+h1{
+    color: firebrick;
+}
+.post{
+    background-color: pink;
+}
+.user{
+    font-style: italic;
+}
