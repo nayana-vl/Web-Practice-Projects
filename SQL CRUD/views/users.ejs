@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Users Data</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>All Users Data</h1>
+    <a href="http://localhost:8080/">Back to Home Page</a><br><br>
+    <table>
+        <tr>
+            <th>Id</th>
+            <th>Email</th>
+            <th>Username</th>
+        </tr>
+        <!-- <tr>
+            <td>123</td>
+            <td>123@gmail.com</td>
+            <td>123nayana</td>
+        </tr> -->
+        <% for (user of users) { %>
+            <tr>
+                <td><%= user.id %></td>
+                <td><%= user.email %></td>
+                <td><%= user.username %></td>
+                <form action="/users/<%=user.id%>/edit" method="get">
+                    <td><button>Edit username</button></td>
+                </form>
+                <form action="/users/<%=user.id%>?_method=DELETE" method="post">
+                    <td><button>Delete</button></td>
+                </form>
+            </tr>
+        <% } %>
+    </table>
+    
+</body>
+</html>

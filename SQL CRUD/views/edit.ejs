@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Username</title>
+</head>
+<body>
+    <h1>Edit Username</h1>
+    <h3>UserId : <%= user.id %></h3>
+    <h3>User Email : <%= user.email %></h3>
+    <form action="/users/<%=user.id%>?_method=PATCH" method="post">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" value="<%=user.username%>">
+        <input type="password" id="password" name="password" placeholder="Enter your password">
+        <button type="submit">Update</button>
+    </form>
+    <!-- <a href="/users">Back</a> -->
+    
+</body>
+</html>

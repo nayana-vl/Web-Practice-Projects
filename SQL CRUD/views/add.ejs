@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adding User</title>
+</head>
+<body>
+    <h1>Add New User</h1>
+    <form action="/users" method="post">
+        <label for="id">Id:</label>
+        <input id="id" name="id" value="<%=faker.string.uuid()%>"><br><br>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" placeholder="Enter your email"><br><br>
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" placeholder="Enter your username"><br><br>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" placeholder="Enter your password"><br><br>
+        <button type="submit">Submit</button>
+    </form>
+    
+</body>
+</html>
