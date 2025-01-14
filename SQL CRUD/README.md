@@ -11,3 +11,5 @@ Step 3: Set Up Frontend Place the HTML files in views folder.
 Step 5: Run the Server Start the server using: node server.js
 
 The server will run at http://localhost:8080/
+
+NOTE : index.js and server.js both files are same but server file is the main file.
