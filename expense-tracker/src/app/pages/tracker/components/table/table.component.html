@@ -1,0 +1,48 @@
+<table class="fwe-table fwe-mt-4">
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>Tags</th>
+      <th>Amount</th>
+      <th>Total Amount</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (group of groupedExpenses(); track group.date) {
+
+      <!-- Main Date Row -->
+      <tr class="main-row" [class.active]="activeDate() === group.date"
+        (click)="toggleRow(group.date)">
+        <td>{{ group.date }}</td>
+        <td>
+          @for (expense of group.entries; track expense.description) {
+            <span>{{ expense.description }}, </span>
+          }
+        </td>
+        <td>
+             @for (expense of group.entries; track expense.description) {
+            <span>{{ expense.amount }}, </span>
+          }
+        </td>
+        <td>{{ getTotalAmount(group.entries) }}</td>
+      </tr>
+
+      <!-- Child Rows -->
+      @if (activeDate() === group.date) {
+        @for (expense of group.entries; track expense.time) {
+          <tr class="child-row">
+            <td></td>
+            <td>{{ expense.description }}</td>
+            <td>{{ expense.amount }}</td>
+            <td></td>
+          </tr>
+        }
+      }
+
+    } @empty {
+      <tr>
+        <td colspan="4" class="fwe-text-center">No expenses found</td>
+      </tr>
+    }
+  </tbody>
+</table>

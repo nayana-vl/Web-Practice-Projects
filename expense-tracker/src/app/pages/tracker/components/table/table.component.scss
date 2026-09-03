@@ -1,0 +1,33 @@
+table {
+  width: 100%;
+
+  th, td {
+    white-space: nowrap;
+    width: auto;
+  }
+}
+
+.main-row {
+  cursor: pointer;
+  font-weight: bold;
+
+  &:hover {
+    background-color: #e0e0e0;
+  }
+
+  &.active {
+    background-color: #e0e0e0;
+
+    td {
+      background-color: #e0e0e0;
+    }
+  }
+}
+
+.child-row {
+  td {
+    padding-left: 2rem;
+    font-size: 0.9rem;
+    color: #555;
+  }
+}

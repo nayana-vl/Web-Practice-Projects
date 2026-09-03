@@ -1,0 +1,23 @@
+/* You can add global styles to this file, and also import other style files */
+@import '../node_modules/@festo-ui/web-essentials/dist/css/festo-web-essentials.min.css';
+@import '../node_modules/@festo-ui/web-essentials/dist/css/organisms/festo-web-essentials-organisms.min.css';
+@import '../node_modules/@festo-ui/web-essentials/dist/css/themes/flatpickr/festo.min.css';
+@import '../node_modules/@festo-ui/icon-font/dist/icons.css';
+@import '../node_modules/@festo-ui/web-essentials/dist/css/light/festo-web-essentials-light.css';
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: #f4f4f4;
+  overflow: hidden;
+  height: 100vh;
+}
+
+html {
+  overflow: hidden;
+  height: 100vh;
+}

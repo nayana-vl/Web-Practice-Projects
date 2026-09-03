@@ -1,0 +1,27 @@
+<!-- Home -->
+<button
+  class="fwe-btn fwe-btn-link fwe-dark"
+  data-test="home"
+  (click)="toggleToolbar.emit('home')"
+  [class.fwe-active]="activeToolbar === 'home'"
+>
+  <i class="fwe-icon fwe-icon-menu-home fwe-icon-lg"></i>
+</button>
+<!-- Table -->
+<button
+  class="fwe-btn fwe-btn-link fwe-dark "
+  data-test="table view"
+  (click)="toggleToolbar.emit('table')"
+  [class.fwe-active]="activeToolbar === 'table'"
+>
+  <i class="fwe-icon fwe-icon-lg fwe-icon-table fwe-icon-lg"></i>
+</button>
+<!-- Charts -->
+<button
+  class="fwe-btn fwe-btn-link fwe-dark "
+  data-test="charts view"
+  (click)="toggleToolbar.emit('charts')"
+  [class.fwe-active]="activeToolbar === 'charts'"
+>
+  <i class="fwe-icon fwe-icon-lg fwe-icon-dashboard fwe-icon-lg"></i>
+</button>

@@ -1,0 +1,39 @@
+<global-nav></global-nav>
+<style>
+  main { display: flex; height: 100vh; }
+</style>
+<main class="fwe-mb-4 fwe-b">
+  <div class="fwe-toolbar">
+    <div class="fwe-toolbar-actions">
+      <tracker-toolbar 
+        [activeToolbar]="activeToolbar"
+        (toggleToolbar)="switchPanel($event)">
+      </tracker-toolbar>
+    </div>
+  </div>
+  <div class="fwe-container fwe-bg-gray-100 fwe-mt-5">
+    <div class="tracker-wrapper">
+
+      <!-- Home View -->
+      @if (activeToolbar === 'home') {
+        <home-component></home-component>
+      }
+
+      <!-- Table View -->
+      @if (activeToolbar === 'table') {
+        <table-component></table-component>
+      }
+
+      <!-- Charts View -->
+      @if (activeToolbar === 'charts') {
+        <p>Charts View — Coming Soon</p>
+      }
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="tracker-footer">
+      <span>&copy; 2026 Nayana SE - All rights reserved.</span>
+    </footer>
+  </div>
+</main>

@@ -1,0 +1,46 @@
+<div class="tracker-container fwe-d-flex fwe-justify-content-center fwe-align-item-center">
+    <div class="fwe-card padding-39">
+
+        <!-- Clock Circle -->
+        <div class="outer-circle">
+            <div class="inner-circle">
+                <p class="today">{{ today }}</p>
+                <div class="fwe-d-flex">
+                    <div>
+                        <span class="time-value">{{ hours }}:</span>
+                        <br />
+                        <span class="time-unit">hr</span>
+                    </div>
+                    <div>
+                        <span class="time-value">{{ minutes }}:</span>
+                        <br />
+                        <span class="time-unit">min</span>
+                    </div>
+                    <div>
+                        <span class="time-value">{{ seconds }}</span>
+                        <br />
+                        <span class="time-unit">sec</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Input 1: What did you spend on -->
+        <div class="session-input-stopped">
+            <input type="text" class="tag-input" [(ngModel)]="expenseDescription"
+                placeholder="What did you spend on?" />
+        </div>
+
+        <!-- Input 2: How much did you spend -->
+        <div class="session-input-stopped">
+            <input type="number" class="tag-input" [(ngModel)]="expenseAmount" placeholder="Amount spent" />
+        </div>
+
+        <!-- Add Button -->
+        <div class="fwe-d-flex fwe-justify-content-center fwe-align-items-center fwe-mt-3">
+            <button class="fwe-btn fwe-btn-hero" type="button" (click)="addExpense()">
+                Add
+            </button>
+        </div>
+    </div>
+</div>

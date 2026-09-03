@@ -1,0 +1,8 @@
+xfng-scroll-top {
+  z-index: 10;
+}
+
+.toolbar ::ng-deep .fwe-toolbar {
+  overflow-x: hidden !important;
+  overflow: hidden !important;
+}
