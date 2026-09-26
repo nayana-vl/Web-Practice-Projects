@@ -45,3 +45,5 @@ Thumbs.db
 node_modules
 package-lock.json
 angular/.angular
+android
+build
