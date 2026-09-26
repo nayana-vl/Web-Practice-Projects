@@ -1,0 +1,75 @@
+<div data-test="edit-input" class="fwe-search-input fwe-w-100">
+  @if (!multiple) {
+    <input
+      class="fwe-w-100 edit-input"
+      (input)="filterSuggetions($event)"
+      (focus)="filterSuggetions($event)"
+      (click)="showSuggestions=true"
+      type="search"
+      [disabled]="disabled"
+      [value]="value"
+      placeholder="Search Tags"
+      (keydown)="onKeyDown($event)"
+      autocomplete="off"
+      />
+  }
+  @if (value != '' && !multiple) {
+    <div class="fwe-clear-icon" (click)="clearInput()"></div>
+  }
+  @if (multiple) {
+    <div class="multi-search" (click)="showSuggestions=true;focusSearchInputInSuggestions()">
+      @if (selectedTags.length === 0) {
+        <span>Search Tags</span>
+      }
+      @for (tag of selectedTags; track tag; let i = $index) {
+        <div class="fwe-chip fwe-mr-2 fwe-mb-2">
+          {{tag}}
+          <i class="fwe-icon fwe-icon-menu-close fwe-ml-2 fwe-mr-auto" (click)="removeTag(i)"></i>
+        </div>
+      }
+    </div>
+  }
+
+  @if ((showSuggestions && !disabled)) {
+    <div class="fwe-search-suggestions">
+      @if (multiple) {
+        <input
+          #searchSuggetionInput
+          class="fwe-w-100 edit-input fwe-border-none fwe-outline-none"
+          (input)="filterSuggetions($event)"
+          (focus)="filterSuggetions($event)"
+          [disabled]="disabled"
+          placeholder="Search Tags"
+          [value]="value"
+          (keydown)="onKeyDown($event)"
+          autocomplete="off"
+          type="search"
+          />
+      }
+      <div [class.suggestions-oveflow]="showAllSuggestions">
+        @for (suggestion of cappedSuggestions; track suggestion.value; let i = $index) {
+          <div
+            class="fwe-search-suggestion"
+            (click)="selectSuggestion(suggestion.value)"
+            [class.active-hover]="activeIndex===i"
+            [title]="suggestion.value"
+            >
+            <div class="fwe-d-flex">
+              @if (multiple) {
+                <fng-checkbox
+                  (click)="$event.stopPropagation()"
+                  (change)="selectMutipleTags(suggestion.value)"
+                  [checked]="selectedTags.includes(suggestion.value) "
+                ></fng-checkbox>
+              }
+              <span class="suggestion-text text-elipsis" [title]="suggestion.value">{{ suggestion.value }}</span>
+            </div>
+          </div>
+        }
+      </div>
+      @if (filteredTags.length > 8 && !showAllSuggestions) {
+        <div class="fwe-ml-xxs">...</div>
+      }
+    </div>
+  }
+</div>

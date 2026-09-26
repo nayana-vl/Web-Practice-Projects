@@ -1,0 +1,61 @@
+div.table-options {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: center;
+  flex-wrap: wrap;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+}
+
+.table-action-buttons {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+// ── Responsive Grid Behavior ──────────────────────────
+.fwe-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 1rem;
+}
+
+.fwe-col-12 {
+  grid-column: span 12;
+}
+
+.fwe-col-6 {
+  grid-column: span 6;
+
+  @media (max-width: 900px) {
+    grid-column: span 12; // stack bar-chart & doughnut-chart on tablets/mobile
+  }
+}
+
+// ── Date range / scrubber row responsiveness ──────────
+.fwe-d-flex {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    width: 100%;
+  }
+}
+
+.fwe-flex-column {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+
+  @media (min-width: 769px) {
+    width: auto;
+  }
+}

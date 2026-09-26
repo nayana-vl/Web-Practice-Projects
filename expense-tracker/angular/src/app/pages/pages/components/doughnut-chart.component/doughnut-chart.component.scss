@@ -1,0 +1,39 @@
+.doughnut-container {
+  background-color: #ffffff;
+  padding: 1.5rem;
+  height: 100%;
+  width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+
+  @media (max-width: 600px) {
+    padding: 1rem;
+  }
+}
+
+.doughnut-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #333333;
+  margin-bottom: 1.5rem;
+  text-align: center;
+
+  @media (max-width: 600px) {
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+  }
+}
+
+.relative {
+  position: relative;
+  width: 100%;
+  height: 320px; // fixed height so chart.js maintainAspectRatio:false works correctly
+
+  @media (max-width: 600px) {
+    height: 260px;
+  }
+}
+
+.flex-grow {
+  flex-grow: 1;
+}

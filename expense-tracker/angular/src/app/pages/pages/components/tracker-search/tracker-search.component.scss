@@ -1,0 +1,51 @@
+.active-hover {
+ background: var(--fwe-background);
+}
+.multi-search {
+        border-left: none;
+        border-top:none;
+      border-right: none;
+    border-radius: 0px;
+    border-bottom: 1px solid var(--fwe-control-border);
+    background: transparent;
+    padding: 1px 24px 4px 4px;
+     display: flex;
+     flex-wrap: wrap;
+     width: 100%;
+ 
+}
+.edit-input {
+  text-align: left !important;
+}
+
+.edit-input .fwe-search-input input {
+  padding-left: 4px;
+}
+.fwe-search-input input
+ {
+    width: 100%;
+    border-left: none;
+    border-top: none;
+    border-right: none;
+    border-radius: 0px;
+    border-bottom: 1px solid var(--fwe-control-border);
+    background: transparent;
+    padding: 1px 24px 4px 4px;
+   
+}
+.suggestions-oveflow{
+  max-height: 362px;
+  overflow-y: auto;
+}
+
+.overflow-auto {
+  overflow: auto;
+}
+
+.text-elipsis {
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+   pointer-events: auto;
+
+}

@@ -1,0 +1,92 @@
+<ng-container>
+<div class="fwe-container fwe-mt-6">
+  <div class="table-options">
+    <div class="fwe-d-flex">
+      <div class="fwe-d-flex fwe-flex-column">
+        <fng-date-range-picker
+            [(ngModel)]="dateRange"
+            [options]="datePickerOptions"
+            (ngModelChange)="onDateRangeChange($event)">
+            Date Range
+          </fng-date-range-picker>
+        <div class="table-options">
+          <date-scrubber
+            mode="year"
+            [initialValue]="selectedYear"
+            (valueChange)="onYearChange($event)">
+          </date-scrubber>
+          <date-scrubber
+            mode="month"
+            [initialValue]="selectedMonth"
+            (valueChange)="onMonthChange($event)">
+          </date-scrubber>
+        </div>
+      </div>
+
+      <!-- Tag Filter Search -->
+      <fv-tracker-search [allTags]="allTags" [multiple]="true" class="filter-tag"
+        [newTagToBeAdded]="false"
+        [selectedTags]="selectedTags"
+        [showAllSuggestions]="true"
+        (selectedTagsChange)="onFilterTagsSelected($event)">
+      </fv-tracker-search>
+    </div>
+  </div>
+
+<section class="fwe-mt-4">
+  <heatmap
+    [title]="'Weekly Expenses'"
+    unit="₹"
+    [data]="heatmapData"
+    [weeklyTotals]="heatmapWeeklyTotals"
+    [weekLabels]="heatmapWeekLabels"
+    [yAxisLabels]="heatmapDayLabels"
+    [legendConfig]="heatmapLegendConfig">
+  </heatmap>
+</section>
+  <table class="fwe-table fwe-mt-4">
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Tags</th>
+        <th>Amount</th>
+        <th>Total Amount</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (group of filteredGroupedExpenses(); track group.date) {
+        <tr class="main-row" [class.active]="activeDate() === group.date"
+          (click)="toggleRow(group.date)">
+          <td>{{ group.date }}</td>
+          <td class="tags-cell">
+            @for (expense of group.entries; track expense.description) {
+              <div class="fwe-chip">{{expense.description}}</div>
+            }
+          </td>
+          <td class="tags-cell">
+            @for (expense of group.entries; track expense.description) {
+              <div class="fwe-chip">{{expense.amount}}</div>
+            }
+          </td>
+          <td>{{ getTotalAmount(group.entries) }}</td>
+        </tr>
+
+        @if (activeDate() === group.date) {
+          @for (expense of group.entries; track expense.time) {
+            <tr class="child-row">
+              <td>{{ expense.time }}</td>
+              <td class="tags-cell">
+                <div class="fwe-chip">{{expense.description}}</div>
+              </td>
+              <td class="tags-cell">
+                <div class="fwe-chip">{{expense.amount}}</div>
+              </td>
+              <td></td>
+            </tr>
+          }
+        }
+      }
+    </tbody>
+  </table>
+</div>
+</ng-container>

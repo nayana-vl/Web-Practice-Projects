@@ -1,0 +1,25 @@
+<div class="scrubber-container">
+  <button class="scrubber-button"
+    (mousedown)="startChange('previous')"
+    (mouseup)="stopChange()"
+    (mouseleave)="stopChange()">
+    <i class="fwe-icon fwe-icon-arrows-left-2 scrubber-icon">
+    </i>
+  </button>
+  <div class="display-wrapper">
+    <span
+      class="scrubber-display"
+      [class.slide-right]="animationDirection === 'right'"
+      [class.slide-left]="animationDirection === 'left'">
+      {{ displayValue }}
+    </span>
+  </div>
+  <button class="scrubber-button"
+    [disabled]="isNextDisabled"
+    (mousedown)="startChange('next')"
+    (mouseup)="stopChange()"
+    (mouseleave)="stopChange()">
+    <i class="fwe-icon fwe-icon-arrows-right-2 scrubber-icon">
+    </i>
+  </button>
+</div>

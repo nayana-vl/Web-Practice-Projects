@@ -1,0 +1,56 @@
+<div class="heatmap-container">
+  <h2 class="heatmap-title">{{ title() }}</h2>
+
+  @if (heatmapMatrix.length > 0) {
+  <div class="heatmap-wrapper">
+    <div class="heatmap-content">
+
+      <!-- Header Row: spacer + Column Labels + "Total" -->
+      <div class="day-labels-row" [style.grid-template-columns]="gridTemplateColumns()">
+        <div class="day-label week-label-spacer"></div>
+        @for (label of yAxisLabels(); track label) {
+          <div class="day-label">{{ label }}</div>
+        }
+        <div class="day-label total-label">Total</div>
+      </div>
+
+      <!-- Rows Grid -->
+      <div class="heatmap-grid-container">
+        @for (weekRow of heatmapMatrix; track $index; let weekIndex = $index) {
+          <div class="heatmap-cells-row" [style.grid-template-columns]="gridTemplateColumns()">
+            <!-- Row Label -->
+            <div class="week-label">{{ weekLabels()[weekIndex] }}</div>
+
+            @for (cell of weekRow; track $index) {
+              <div
+                [class]="'heatmap-cell heatmap-color-' + cell.colorIndex"
+                [title]="cell.tooltip">
+                @if (cell.value > 0) {
+                  <span class="cell-value">{{ cell.value | number:'1.0-0' }}</span>
+                }
+              </div>
+            }
+
+            <!-- Grand Total for this row -->
+            <div class="week-total-cell">
+              {{ unit() }}{{ weeklyTotals()[weekIndex] | number:'1.0-0' }}
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+
+  <!-- Legend -->
+  <div class="legend-container">
+    @for (item of legendConfig(); track item.label; let i = $index) {
+    <div class="legend-item">
+      <div [class]="'legend-color-box heatmap-color-' + (i + this.indexOffset)"></div>
+      <span class="legend-label">{{ item.label }}</span>
+    </div>
+    }
+  </div>
+  } @else {
+  <p class="no-data-message">No data available</p>
+  }
+</div>

@@ -1,0 +1,55 @@
+<ng-container>
+  <div class="fwe-container fwe-mt-6" data-test="charts">
+    <div class="fwe-grid">
+      <div class="table-options fwe-col-12">
+        <div class="fwe-d-flex">
+          <div class="fwe-d-flex fwe-flex-column">
+            <fng-date-range-picker
+              [(ngModel)]="dateRange"
+              [options]="datePickerOptions"
+              (ngModelChange)="onDateRangeChange($event)">
+              Date Range
+            </fng-date-range-picker>
+            <div class="table-options">
+              <date-scrubber
+                mode="year"
+                [initialValue]="selectedYear"
+                (valueChange)="onYearChange($event)">
+              </date-scrubber>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="fwe-col-12">
+        <heatmap
+          [title]="'Monthly Expenses'"
+          unit="₹"
+          [data]="heatmapData"
+          [weeklyTotals]="heatmapMonthlyTotals"
+          [weekLabels]="heatmapRowLabel"
+          [yAxisLabels]="heatmapMonthLabels"
+          [legendConfig]="heatmapLegendConfig">
+        </heatmap>
+      </div>
+
+      <div class="fwe-col-6">
+        <bar-chart
+          chartTitle="Top 10 Items by Spend"
+          [data]="topItemsChartData"
+          xAxisLabel="Amount Spent (₹)"
+          tooltipPrefix="₹">
+        </bar-chart>
+      </div>
+
+      <div class="fwe-col-6">
+        <doughnut-chart
+          chartTitle="Yearly Expenses"
+          [data]="yearlyDoughnutData"
+          [centerText]="yearlyTotalDisplay"
+          tooltipPrefix="₹">
+        </doughnut-chart>
+      </div>
+    </div>
+  </div>
+</ng-container>

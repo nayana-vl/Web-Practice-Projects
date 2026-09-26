@@ -1,0 +1,137 @@
+.heatmap-container {
+  background-color: #ffffff;
+  padding: 1.5rem;
+}
+
+.heatmap-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #333333;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.heatmap-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.heatmap-content {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 720px;
+}
+
+.day-labels-row {
+  display: grid;
+  gap: 0.35rem;
+  margin-bottom: 0.35rem;
+  align-items: center;
+}
+
+.day-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #595959;
+  text-align: center;
+}
+
+.week-label-spacer {
+  visibility: hidden;
+}
+
+.total-label {
+  color: #333333;
+  font-weight: 700;
+}
+
+.heatmap-grid-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.heatmap-cells-row {
+  display: grid;
+  gap: 0.35rem;
+  align-items: center;
+}
+
+.week-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #595959;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.heatmap-cell {
+  width: 1.75rem;
+  height: 1.75rem;
+  aspect-ratio: 1;
+  border-radius: 0.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+.cell-value {
+  font-size: 0.6rem;
+  color: #fff;
+  font-weight: 600;
+}
+
+.week-total-cell {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #333333;
+  text-align: center;
+  background-color: #f0f2f3;
+  border-radius: 0.2rem;
+  padding: 0.35rem 0.2rem;
+}
+
+.legend-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  row-gap: 0.5rem;
+  column-gap: 1rem;
+  margin-top: 1rem;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.legend-color-box {
+  width: 0.85rem;
+  height: 0.85rem;
+  border-radius: 0.125rem;
+}
+
+.legend-label {
+  font-size: 0.7rem;
+  color: #595959;
+}
+
+.no-data-message {
+  text-align: center;
+  color: #595959;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+// ── Color palette ──────────────────────────────────
+.heatmap-color-0 { background-color: #badcf8; }
+.heatmap-color-1 { background-color: #badcf8; }
+.heatmap-color-2 { background-color: #b71c1c; }
+.heatmap-color-3 { background-color: #000000; }
+.heatmap-color-4 { background-color: #0064a3; }
+.heatmap-color-5 { background-color: #3f9bd8; }
+.heatmap-color-6 { background-color: #f0f2f3; }

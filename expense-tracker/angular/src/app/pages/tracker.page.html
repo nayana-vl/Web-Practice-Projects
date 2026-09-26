@@ -1,0 +1,34 @@
+<global-nav></global-nav>
+<main class="fwe-mb-4 fwe-b">
+  <div class="fwe-toolbar">
+    <div class="fwe-toolbar-actions">
+      <tracker-toolbar 
+        [activeToolbar]="activeToolbar"
+        (toggleToolbar)="switchPanel($event)">
+      </tracker-toolbar>
+    </div>
+  </div>
+  <div class="fwe-container fwe-bg-gray-100">
+    <div class="tracker-wrapper">
+
+      <!-- Home View -->
+      @if (activeToolbar === 'home') {
+        <home-component></home-component>
+      }
+    </div>
+
+      <!-- Table View -->
+      @if (activeToolbar === 'table') {
+        <table-component></table-component>
+      }
+
+      <!-- Charts View -->
+      @if (activeToolbar === 'charts') {
+        <charts-component></charts-component>
+      }
+    <!-- Footer -->
+    <footer class="tracker-footer">
+      <span>&copy; 2026 ExpenseTracker - All rights reserved.</span>
+    </footer>
+  </div>
+</main>
