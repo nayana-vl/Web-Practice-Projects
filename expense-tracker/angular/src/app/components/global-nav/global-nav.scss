@@ -1,0 +1,87 @@
+.fwe-fixed-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background-color: #ffffff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.fwe-navbar {
+  .fwe-container {
+    display: flex !important;
+    align-items: center !important;
+    flex-wrap: nowrap !important;
+    width: 100% !important;
+    min-height: 56px; // 🔑 explicit height so flex align-items:center has something to center against
+    position: relative;
+  }
+}
+
+.fwe-app-title-container {
+  display: flex !important;
+  align-items: center !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  font-size: 1rem;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex-shrink: 1;
+  min-width: 0;
+  color: var(--app-text-primary, #333333);
+  margin: 0 !important;      // 🔑 reset any inherited margin pushing it up/down
+  padding: 0;
+  line-height: 1.2;          // 🔑 reset line-height so text sits centered, not shifted
+  position: relative;
+  top: 0;                    // reset in case there's a stray `top` offset from Festo's CSS
+
+  @media (max-width: 480px) {
+    font-size: 0.85rem;
+  }
+}
+
+.fwe-mobile-flyout {
+  flex-shrink: 0;
+}
+
+// ── Tab Navigation ──────────────────────────────────
+.tab-nav-container {
+  position: relative;
+  width: 100%;
+  border-top: 1px solid #eaeaea;
+}
+
+.tab-nav {
+  display: flex;
+  width: 100%;
+}
+
+.tab-nav-item {
+  flex: 1;
+  padding: 0.85rem 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-align: center;
+  white-space: nowrap;
+  border-radius: 0;
+
+  @media (max-width: 480px) {
+    font-size: 0.8rem;
+    padding: 0.7rem 0.3rem;
+  }
+
+  &.fwe-active {
+    font-weight: 700;
+  }
+}
+
+.tab-nav-underline {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  background-color: var(--fwe-color-primary, #0091dc);
+  border-radius: 2px 2px 0 0;
+  transition: transform 0.3s ease;
+}

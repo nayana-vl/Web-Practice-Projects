@@ -1,21 +1,20 @@
-<global-nav></global-nav>
+<global-nav
+  [activeToolbar]="activeToolbar"
+  (toggleToolbar)="switchPanel($event)">
+</global-nav>
+
 <main class="fwe-mb-4 fwe-b">
-  <div class="fwe-toolbar">
-    <div class="fwe-toolbar-actions">
-      <tracker-toolbar 
-        [activeToolbar]="activeToolbar"
-        (toggleToolbar)="switchPanel($event)">
-      </tracker-toolbar>
-    </div>
-  </div>
-  <div class="fwe-container fwe-bg-gray-100">
+  <div
+    class="fwe-container fwe-bg-white"
+    (touchstart)="onTouchStart($event)"
+    (touchend)="onTouchEnd($event)">
+
     <div class="tracker-wrapper">
 
       <!-- Home View -->
       @if (activeToolbar === 'home') {
         <home-component></home-component>
       }
-    </div>
 
       <!-- Table View -->
       @if (activeToolbar === 'table') {
@@ -26,6 +25,8 @@
       @if (activeToolbar === 'charts') {
         <charts-component></charts-component>
       }
+    </div>
+
     <!-- Footer -->
     <footer class="tracker-footer">
       <span>&copy; 2026 ExpenseTracker - All rights reserved.</span>

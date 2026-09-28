@@ -1,103 +1,176 @@
-thead > tr > th{
+thead > tr > th {
+  font-weight: bolder;
+  border-bottom: 2px solid #d6d4d4;
+  z-index: 100;
+}
+
+.main-row {
+  cursor: pointer;
+
+  &.active > td {
     font-weight: bolder;
-    border-bottom: 2px solid #d6d4d4;
+    background-color: #e6e9ec !important;
     z-index: 100;
-;
-}
-.main-row{
-    cursor: pointer;
+  }
 
-    &.active > td{
-        font-weight: bolder;
-        background-color: #e6e9ec !important;
-        z-index:    100;
-    }
-
-    td{
-        z-index: 100;
-    }
+  td {
+    z-index: 100;
+  }
 }
 
-.presence-row{
-    display: none;
+.presence-row {
+  display: none;
+  width: 100%;
+  z-index: 100;
+  position: relative;
+
+  td {
+    color: #808285;
+  }
+}
+
+.active-presence-row {
+  display: table-row;
+
+  td {
+    border: none;
+  }
+
+  animation: fadeSlideDown 700ms cubic-bezier(.22, .94, .36, 1) both;
+  will-change: opacity, transform;
+
+  @keyframes fadeSlideDown {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+.tags-cell div {
+  display: inline-block;
+  margin-right: 5px;
+  height: auto !important;
+
+  @media (max-width: 900px) {
+    margin-bottom: 5px;
+  }
+}
+
+// ── Table options row (date range + scrubbers + search) ──────────
+div.table-options {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: center;
+  flex-wrap: wrap; // 🔑 allow wrapping on small screens
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+}
+
+.table-action-buttons {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.tracker-footer {
+  margin-top: 48px;
+  text-align: center;
+  color: #a4a5a6;
+}
+
+.search-width {
+  display: block;
+  width: 200px;
+
+  @media (max-width: 768px) {
     width: 100%;
-    z-index: 100;
-    position: relative;
-    td{
-        color: #808285;
-    }
+  }
 }
 
-.active-presence-row{
-    display: table-row;
-    td{
-        border: none;
-    }
-    animation: fadeSlideDown 700ms cubic-bezier(.22,.94,.36,1) both;
-    will-change: opacity, transform;
-
-    @keyframes fadeSlideDown {
-        from {
-            opacity: 0;
-            transform: translateY(-10px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-}
-
-.tags-cell div{
-    display: inline-block;
-    margin-right: 5px;
-    height: auto !important;
-    @media (max-width: 900px) {
-        margin-bottom: 5px;
-    }
-}
-div.table-options{
-    display: flex;
-	 justify-content: space-between; /* pushes items to the ends */
-    gap: 16px;
-    align-items: center;
-}
-.table-action-buttons{
-    display: flex;
-    gap: 16px;
-}
-
-.tracker-footer{
-	margin-top: 48px;
-	text-align: center;
-	color: #a4a5a6;
-}
-.search-width{
-    display: block;
-    width: 200px;
-}
 .tags-cell {
   position: relative;
 }
-.fwe-chips{
-    z-index: 100;
-    position: relative
+
+.fwe-chips {
+  z-index: 100;
+  position: relative;
 }
 
 ::ng-deep .fwe-search-suggestions {
-    position: absolute !important;
-    top: 100% !important;
-    left: 0;
-    right: 0;
-    z-index: 9999 !important;
-    background: rgba(255, 255, 255, 0.8);
-    
-    overflow-y: auto;
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
-    backdrop-filter: blur(10px);
+  position: absolute !important;
+  top: 100% !important;
+  left: 0;
+  right: 0;
+  z-index: 9999 !important;
+  background: rgba(255, 255, 255, 0.8);
+  overflow-y: auto;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
 }
-.filter-tag{
-    width: 500px;
-    margin-top: 20px;
-    margin-left: 24px;
+
+// ── Tag filter search box ──────────────────────────────
+.filter-tag {
+  width: 500px;
+  margin-top: 20px;
+  margin-left: 24px;
+
+  @media (max-width: 900px) {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  @media (max-width: 480px) {
+    margin-top: 12px;
+  }
+}
+
+// ── fwe-d-flex containers (date range + scrubber wrapper) ──────
+.fwe-d-flex {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: flex-start;
+  width: 100%;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
+}
+
+.fwe-flex-column {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+
+  @media (min-width: 769px) {
+    width: auto;
+  }
+}
+
+// ── Date scrubber row (year + month) ──────────────────
+.table-options .table-options {
+  // nested table-options (year/month scrubbers) — should NOT space-between, just wrap nicely
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 12px;
+
+  @media (max-width: 480px) {
+    width: 100%;
+
+    date-scrubber {
+      flex: 1 1 45%; // two scrubbers side by side even on small screens, each taking ~half width
+      min-width: 130px;
+    }
+  }
 }
