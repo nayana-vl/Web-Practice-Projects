@@ -1,10 +1,8 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'global-nav',
   standalone: true,
-  imports: [NgClass],
   templateUrl: './global-nav.html',
   styleUrl: './global-nav.scss',
 })

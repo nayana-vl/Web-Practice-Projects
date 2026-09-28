@@ -3,10 +3,10 @@
 
   @if (heatmapMatrix.length > 0) {
   <div class="heatmap-wrapper">
-    <div class="heatmap-content">
+    <div class="heatmap-content" [class.monthly-view]="yAxisLabels().length === 12">
 
-      <!-- Header Row: spacer + Column Labels + "Total" -->
-      <div class="day-labels-row" [style.grid-template-columns]="gridTemplateColumns()">
+      <!-- Header Row: spacer + Column Labels + "Total" (DESKTOP layout) -->
+      <div class="day-labels-row desktop-only-row" [style.grid-template-columns]="gridTemplateColumns()">
         <div class="day-label week-label-spacer"></div>
         @for (label of yAxisLabels(); track label) {
           <div class="day-label">{{ label }}</div>
@@ -17,8 +17,9 @@
       <!-- Rows Grid -->
       <div class="heatmap-grid-container">
         @for (weekRow of heatmapMatrix; track $index; let weekIndex = $index) {
-          <div class="heatmap-cells-row" [style.grid-template-columns]="gridTemplateColumns()">
-            <!-- Row Label -->
+
+          <!-- DESKTOP row: original single-row grid layout -->
+          <div class="heatmap-cells-row desktop-only-row" [style.grid-template-columns]="gridTemplateColumns()">
             <div class="week-label">{{ weekLabels()[weekIndex] }}</div>
 
             @for (cell of weekRow; track $index) {
@@ -31,11 +32,38 @@
               </div>
             }
 
-            <!-- Grand Total for this row -->
             <div class="week-total-cell">
               {{ unit() }}{{ weeklyTotals()[weekIndex] | number:'1.0-0' }}
             </div>
           </div>
+
+          <!-- MOBILE row (monthly view only): paired label+box units -->
+          <div class="heatmap-cells-row-mobile mobile-only-row">
+            <div class="week-label">{{ weekLabels()[weekIndex] }}</div>
+
+            <div class="months-wrap">
+              @for (cell of weekRow; track $index; let i = $index) {
+                <div class="month-unit">
+                  <div class="day-label">{{ yAxisLabels()[i] }}</div>
+                  <div
+                    [class]="'heatmap-cell heatmap-color-' + cell.colorIndex"
+                    [title]="cell.tooltip">
+                    @if (cell.value > 0) {
+                      <span class="cell-value">{{ cell.value | number:'1.0-0' }}</span>
+                    }
+                  </div>
+                </div>
+              }
+            </div>
+
+            <div class="week-total-wrapper">
+              <span class="total-label-mobile">Total</span>
+              <span class="week-total-cell">
+                {{ unit() }}{{ weeklyTotals()[weekIndex] | number:'1.0-0' }}
+              </span>
+            </div>
+          </div>
+
         }
       </div>
     </div>

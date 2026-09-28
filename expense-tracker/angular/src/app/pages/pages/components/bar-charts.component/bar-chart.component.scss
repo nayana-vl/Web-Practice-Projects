@@ -4,7 +4,6 @@
   height: 100%;
   width: 100%;
   box-sizing: border-box;
-  overflow: hidden;
 
   @media (max-width: 600px) {
     padding: 1rem;
@@ -24,21 +23,20 @@
   }
 }
 
-.relative {
+// 🔑 Scrollable wrapper — height is set dynamically via JS (computeChartHeight),
+// but we cap max-height and allow vertical scroll on very small screens so the
+// page itself doesn't become excessively tall when there are many bars (e.g. Top 10 items).
+.chart-scroll-wrapper {
   position: relative;
   width: 100%;
-  height: 320px; // fixed height so chart.js can properly compute responsive size
+  overflow-y: auto;
+  max-height: 500px;
 
   @media (max-width: 600px) {
-    height: 260px;
+    max-height: 400px;
   }
-}
-
-.flex-grow {
-  flex-grow: 1;
 }
 
 .bar-chart-canvas {
   width: 100% !important;
-  height: 100% !important;
 }
