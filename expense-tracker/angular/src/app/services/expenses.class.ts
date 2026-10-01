@@ -1,5 +1,6 @@
 export interface Expenses {
-  description: string;
+  items: string;
+  tags: string;
   amount: string;
   date: string;
   time: string;
@@ -8,121 +9,141 @@ export interface Expenses {
 export class ExpenseData {
   static readonly defaultExpenses: Expenses[] = [
     {
-      description: "Peanut butter",
+      items: "Peanut butter",
+      tags: "Groceries",
       amount: "1578",
       date: "Sep 20, 2026",
       time: "02:46:58 PM"
     },
     {
-      description: "Groceries",
+      items: "Groceries",
+      tags: "Groceries",
       amount: "2450",
       date: "Sep 18, 2026",
       time: "10:15:32 AM"
     },
     {
-      description: "Coffee",
+      items: "Coffee",
+      tags: "Food",
       amount: "150",
       date: "Sep 15, 2026",
       time: "08:05:12 AM"
     },
     {
-      description: "Bus fare",
+      items: "Bus fare",
+      tags: "Transport",
       amount: "40",
       date: "Sep 12, 2026",
       time: "09:30:00 AM"
     },
     {
-      description: "Lunch",
+      items: "Lunch",
+      tags: "Food",
       amount: "320",
       date: "Sep 10, 2026",
       time: "01:00:45 PM"
     },
     {
-      description: "Movie tickets",
+      items: "Movie tickets",
+      tags: "Entertainment",
       amount: "600",
       date: "Sep 5, 2026",
       time: "07:20:15 PM"
     },
     {
-      description: "Electricity bill",
+      items: "Electricity bill",
+      tags: "Utilities",
       amount: "1850",
       date: "Sep 1, 2026",
       time: "11:00:00 AM"
     },
     {
-      description: "Internet bill",
+      items: "Internet bill",
+      tags: "Utilities",
       amount: "999",
       date: "Aug 28, 2026",
       time: "09:45:30 AM"
     },
     {
-      description: "Gym membership",
+      items: "Gym membership",
+      tags: "Fitness",
       amount: "1200",
       date: "Aug 22, 2026",
       time: "06:30:00 AM"
     },
     {
-      description: "Books",
+      items: "Books",
+      tags: "Education",
       amount: "450",
       date: "Aug 18, 2026",
       time: "03:15:20 PM"
     },
     {
-      description: "Taxi fare",
+      items: "Taxi fare",
+      tags: "Transport",
       amount: "280",
       date: "Aug 10, 2026",
       time: "10:05:00 PM"
     },
     {
-      description: "Dinner",
+      items: "Dinner",
+      tags: "Food",
       amount: "890",
       date: "Aug 5, 2026",
       time: "08:40:12 PM"
     },
     {
-      description: "Phone recharge",
+      items: "Phone recharge",
+      tags: "Utilities",
       amount: "299",
       date: "Jul 30, 2026",
       time: "12:10:45 PM"
     },
     {
-      description: "Clothes shopping",
+      items: "Clothes shopping",
+      tags: "Shopping",
       amount: "2200",
       date: "Jul 22, 2026",
       time: "04:50:00 PM"
     },
     {
-      description: "Medicines",
+      items: "Medicines",
+      tags: "Health",
       amount: "560",
       date: "Jul 15, 2026",
       time: "05:25:33 PM"
     },
     {
-      description: "Grocery shopping",
+      items: "Grocery shopping",
+      tags: "Groceries",
       amount: "1750",
       date: "Jul 8, 2026",
       time: "11:35:20 AM"
     },
     {
-      description: "Fuel",
+      items: "Fuel",
+      tags: "Fuel",
       amount: "1500",
       date: "Jun 28, 2026",
       time: "07:00:00 AM"
     },
     {
-      description: "Streaming subscription",
+      items: "Streaming subscription",
+      tags: "Entertainment",
       amount: "199",
       date: "Jun 20, 2026",
       time: "09:00:00 PM"
     },
     {
-      description: "Haircut",
+      items: "Haircut",
+      tags: "Personal Care",
       amount: "350",
       date: "Jun 12, 2026",
       time: "02:20:10 PM"
     },
     {
-      description: "Water bill",
+      items: "Water bill",
+      tags: "Utilities",
       amount: "420",
       date: "Jun 3, 2026",
       time: "10:45:00 AM"

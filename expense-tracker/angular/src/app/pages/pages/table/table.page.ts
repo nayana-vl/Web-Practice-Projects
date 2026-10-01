@@ -8,6 +8,12 @@ import { FngDateRangePickerComponent } from '@festo-ui/angular';
 import { HeatmapComponent, LegendItem } from '../components/heatmap/heatmap.component';
 import { buildCurrentMonthExpenseHeatmap } from '../../../services/weekly-chart-data.service';
 
+export interface DedupedItem {
+  items:  string;
+  tags:   string;
+  amount: number;
+}
+
 @Component({
   selector: 'table-component',
   standalone: true,
@@ -62,15 +68,14 @@ export class TableComponent implements OnInit {
     const tagsSet = new Set<string>();
     this.groupedExpenses().forEach(group => {
       group.entries.forEach((entry: Expense) => {
-        if (entry.description) {
-          tagsSet.add(entry.description);
+        if (entry.tags) {
+          tagsSet.add(entry.tags);
         }
       });
     });
     this.allTags = Array.from(tagsSet);
   }
 
-  // ── Filters expenses by BOTH date range AND tags (used for TABLE) ──────
   private getFilteredExpenses(): Expense[] {
     const allExpenses: Expense[] = this.groupedExpenses().flatMap(group => group.entries);
 
@@ -98,12 +103,11 @@ export class TableComponent implements OnInit {
         return true;
       }
       return this.selectedTags.some(tag =>
-        expense.description?.toLowerCase().includes(tag.toLowerCase())
+        expense.tags?.toLowerCase().includes(tag.toLowerCase())
       );
     });
   }
 
-  // ── Table uses date-range + tag filtered expenses, re-grouped by date ──
   filteredGroupedExpenses() {
     const filtered = this.getFilteredExpenses();
 
@@ -120,16 +124,36 @@ export class TableComponent implements OnInit {
       .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
   }
 
-  // ── 🔑 Heatmap follows selectedYear/selectedMonth (updated by BOTH date range picker AND scrubber) ──
+getUniqueItemsForRow(entries: Expense[]): DedupedItem[] {
+  const map = new Map<string, DedupedItem>();
+
+  entries.forEach(expense => {
+    const key = expense.items.trim().toLowerCase(); // 🔑 item name only, no tag in the key
+
+    const amount = parseFloat(expense.amount) || 0;
+
+    if (map.has(key)) {
+      map.get(key)!.amount += amount; // just sum amount, keep first-seen tag as-is
+    } else {
+      map.set(key, {
+        items: expense.items.trim(),
+        tags: expense.tags,
+        amount: amount
+      });
+    }
+  });
+
+  return Array.from(map.values());
+}
+
   private buildHeatmapData(): void {
     const allExpenses: Expense[] = this.groupedExpenses().flatMap(group => group.entries);
 
-    // Apply tag filter only — heatmap always shows the FULL month, not the exact date range
     const tagFiltered = this.selectedTags.length === 0
       ? allExpenses
       : allExpenses.filter(expense =>
           this.selectedTags.some(tag =>
-            expense.description?.toLowerCase().includes(tag.toLowerCase())
+            expense.tags?.toLowerCase().includes(tag.toLowerCase())
           )
         );
 
@@ -139,19 +163,17 @@ export class TableComponent implements OnInit {
     this.heatmapWeekLabels = result.weekLabels;
   }
 
-  // ── Getter for dynamic heatmap title (e.g., "Sep 2026 Expenses") ──
   get heatmapMonthName(): string {
     return new Date(this.selectedYear, this.selectedMonth, 1)
       .toLocaleDateString('en-US', { month: 'short' });
   }
 
-  // ── 🔑 Called by date range picker directly, AND indirectly by scrubber via setRangeToYear/setRangeToMonth ──
   onDateRangeChange(dateRange: Date[]): void {
     this.dateRange = dateRange;
     const [start] = dateRange;
     this.selectedYear = start.getFullYear();
     this.selectedMonth = start.getMonth();
-    this.buildHeatmapData();   // 👈 heatmap rebuilds every time date range OR scrubber changes
+    this.buildHeatmapData();
   }
 
   onDateRangeReset(): void {

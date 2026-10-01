@@ -35,7 +35,8 @@
             ],
             "styles": [
               "src/styles.scss",
-              "../node_modules/@festo-ui/web-essentials/dist/css/themes/flatpickr/festo.min.css"
+              "../node_modules/@festo-ui/web-essentials/dist/css/themes/flatpickr/festo.min.css",
+              "../node_modules/@fortawesome/fontawesome-free/css/all.min.css"
             ]
           },
           "configurations": {

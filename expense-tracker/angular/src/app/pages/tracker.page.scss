@@ -1,36 +1,24 @@
 :host {
   display: block;
-  height: 100vh;
-  overflow: hidden;
+  min-height: 100vh;
 }
 
 main {
   display: flex;
-  flex-direction: column; // 🔑 changed from sidebar-style row layout to column, since toolbar is now a top tab-nav (inside global-nav), not a side panel
-  height: calc(100vh - 60px);
-  overflow: hidden;
-}
-
-// ── Scrollable Content Area ──────────────────────
-.fwe-container {
-  flex: 1;
-  height: 100%;
-  overflow-y: auto;
-  overflow-x: hidden;
-  min-width: 0;
-  touch-action: pan-y; // allow vertical scroll, let JS handle horizontal swipe detection
+  flex-direction: column;
+  min-height: calc(100vh - 60px);
 }
 
 .tracker-wrapper {
   width: 100%;
   max-width: 100%;
-  overflow-x: hidden;
+  flex: 1;
   box-sizing: border-box;
 }
 
-// ── Footer ────────────────────────────────────────
 .tracker-footer {
   margin-top: 48px;
   text-align: center;
   color: #a4a5a6;
+  flex-shrink: 0;
 }

@@ -1,6 +1,8 @@
-import { ChangeDetectorRef, Component, inject, OnDestroy, OnInit } from '@angular/core';
+// home.page.ts
+import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ExpenseService } from '../../../services/expense.service';
+import { buildTopItemsBarChartData } from '../../../services/yearly-chart-data.service';
 
 @Component({
   selector: 'home-component',
@@ -9,86 +11,104 @@ import { ExpenseService } from '../../../services/expense.service';
   templateUrl: './home.page.html',
   styleUrl: './home.page.scss'
 })
-export class HomeComponent implements OnInit, OnDestroy {
+export class HomeComponent implements OnInit {
 
-  // ── Current Time ─────────────────────────────────
-  today: string   = '';
-  hours: string   = '00';
-  minutes: string = '00';
-  seconds: string = '00';
-  period: string  = 'AM';
+  // ── Date (static display, no live timer) ─────────
+  today: string = '';
 
   // ── Expense Inputs ───────────────────────────────
-  expenseDescription: string = '';
-  expenseAmount: string      = '';
+  expenseItems: string = '';
+  expenseAmount: string = '';
+  selectedCategory: string = '';
 
-  private clockInterval: any;
+  // ── Daily Spending Overview ───────────────────────
+  todaysTotal: string = '0';
+  weeklyTotal: string = '0';
+  topItem: string = '-';
+  topItemAmount: string = '0';
+
   private expenseService = inject(ExpenseService);
-  private cdr = inject(ChangeDetectorRef);
-
-  constructor() {}
 
   ngOnInit(): void {
-    this.startClock();
+    this.setTodayDate();
+    this.refreshOverview();
   }
 
-  // ── Clock Always Running ──────────────────────────
-  private startClock(): void {
-    this.tickClock();
-    this.clockInterval = setInterval(() => {
-      this.tickClock();
-      this.cdr.detectChanges();
-    }, 1000);
-  }
-
-  private tickClock(): void {
+  private setTodayDate(): void {
     const now = new Date();
     this.today = now.toLocaleDateString('en-US', {
-      year:  'numeric',
+      year: 'numeric',
       month: 'short',
-      day:   'numeric'
+      day: 'numeric'
     });
-
-    let hrs = now.getHours();
-    this.period = hrs >= 12 ? 'PM' : 'AM';
-
-    hrs = hrs % 12;
-    hrs = hrs === 0 ? 12 : hrs; // 0 should be shown as 12
-
-    this.hours   = this.pad(hrs);
-    this.minutes = this.pad(now.getMinutes());
-    this.seconds = this.pad(now.getSeconds());
   }
 
-  private pad(val: number): string {
-    return val < 10 ? '0' + val : val.toString();
+  selectCategory(label: string): void {
+    this.selectedCategory = label;
   }
 
-  // ── Add Expense ──────────────────────────────────
   addExpense(): void {
-    if (!this.expenseDescription.trim() || !this.expenseAmount) {
+    if (!this.expenseItems.trim() || !this.expenseAmount || !this.selectedCategory) {
       return;
     }
 
-    this.expenseService.addExpense({
-      description: this.expenseDescription.trim(),
-      amount:      this.expenseAmount,
-      date:        this.today,
-      time:        `${this.hours}:${this.minutes}:${this.seconds} ${this.period}`
+    const now = new Date();
+    const time = now.toLocaleTimeString('en-US', {
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit'
     });
-    console.log({
-      description: this.expenseDescription.trim(),
-      amount:      this.expenseAmount,
-      date:        this.today,
-      time:        `${this.hours}:${this.minutes}:${this.seconds} ${this.period}`
+
+    this.expenseService.addExpense({
+      items:  this.expenseItems.trim(),
+      tags:   this.selectedCategory,
+      amount: this.expenseAmount,
+      date:   this.today,
+      time:   time
     });
 
     // ── Reset after add ───────────────────────────
-    this.expenseDescription = '';
-    this.expenseAmount      = '';
+    this.expenseItems = '';
+    this.expenseAmount = '';
+    this.selectedCategory = '';
+
+    this.refreshOverview();
   }
 
-  ngOnDestroy(): void {
-    clearInterval(this.clockInterval);
+  private refreshOverview(): void {
+    const allExpenses = this.expenseService.expenses();
+
+    // ── Today's Total ─────────────────────────────
+    const todaysExpenses = allExpenses.filter(e => e.date === this.today);
+    const todaysSum = todaysExpenses.reduce((sum, e) => sum + (parseFloat(e.amount) || 0), 0);
+    this.todaysTotal = todaysSum.toFixed(2);
+
+    // ── This Week's Total (last 7 days including today) ──
+    const now = new Date();
+    const sevenDaysAgo = new Date(now);
+    sevenDaysAgo.setDate(now.getDate() - 6);
+    sevenDaysAgo.setHours(0, 0, 0, 0);
+
+    const weeklyExpenses = allExpenses.filter(e => {
+      const expenseDate = new Date(e.date);
+      if (isNaN(expenseDate.getTime())) {
+        return false;
+      }
+      return expenseDate >= sevenDaysAgo && expenseDate <= now;
+    });
+
+    const weeklySum = weeklyExpenses.reduce((sum, e) => sum + (parseFloat(e.amount) || 0), 0);
+    this.weeklyTotal = weeklySum.toFixed(2);
+
+    // ── Top Item by Spend ──────────────────────────
+    const topItemsData = buildTopItemsBarChartData(allExpenses, 1);
+
+    if (topItemsData.labels.length > 0) {
+      this.topItem = topItemsData.labels[0];
+      this.topItemAmount = topItemsData.datasets[0].data[0].toFixed(2);
+    } else {
+      this.topItem = '-';
+      this.topItemAmount = '0';
+    }
   }
 }

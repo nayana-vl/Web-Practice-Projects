@@ -47,11 +47,6 @@ export function buildYearlyExpenseHeatmap(
   };
 }
 
-/**
- * Groups expenses by item (description), sums amounts,
- * sorts descending, returns TOP N items for a horizontal bar chart.
- * All bars use a single blue color.
- */
 export function buildTopItemsBarChartData(
   expenses: Expenses[],
   topN: number = 10
@@ -59,7 +54,7 @@ export function buildTopItemsBarChartData(
   const totalsByItem = new Map<string, number>();
 
   expenses.forEach(expense => {
-    const key = expense.description?.trim() || 'Unknown';
+    const key = expense.items?.trim() || 'Unknown';
     const amount = parseFloat(expense.amount) || 0;
     totalsByItem.set(key, (totalsByItem.get(key) || 0) + amount);
   });
@@ -84,11 +79,38 @@ export function buildTopItemsBarChartData(
   };
 }
 
-/**
- * Groups expenses by YEAR (from the earliest expense year up to the CURRENT year only —
- * future years are excluded since they haven't happened yet).
- * Returns data for a doughnut chart, one slice per year, plus the grand total across all years.
- */
+export function buildTopCategoriesBarChartData(
+  expenses: Expenses[],
+  topN: number = 10
+): ChartJsData {
+  const totalsByCategory = new Map<string, number>();
+
+  expenses.forEach(expense => {
+    const key = expense.tags?.trim() || 'Uncategorized';
+    const amount = parseFloat(expense.amount) || 0;
+    totalsByCategory.set(key, (totalsByCategory.get(key) || 0) + amount);
+  });
+
+  const sortedCategories = Array.from(totalsByCategory.entries())
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, topN);
+
+  const labels = sortedCategories.map(([label]) => label);
+  const values = sortedCategories.map(([, value]) => value);
+
+  return {
+    labels,
+    datasets: [
+      {
+        label: 'Amount Spent',
+        data: values,
+        backgroundColor: labels.map((_, i) => COLOR_PALETTE[i % COLOR_PALETTE.length]),
+        borderRadius: 4,
+      }
+    ]
+  };
+}
+
 export function buildYearlyTotalsDoughnutChartData(
   expenses: Expenses[]
 ): { chartData: ChartJsData; totalAmount: number } {

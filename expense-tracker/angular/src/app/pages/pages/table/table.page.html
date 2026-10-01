@@ -48,7 +48,8 @@
     <thead>
       <tr>
         <th>Date</th>
-        <th>Tags</th>
+        <th>Items</th>
+        <th>Category</th>
         <th>Amount</th>
         <th>Total Amount</th>
       </tr>
@@ -59,13 +60,18 @@
           (click)="toggleRow(group.date)">
           <td>{{ group.date }}</td>
           <td class="tags-cell">
-            @for (expense of group.entries; track expense.description) {
-              <div class="fwe-chip">{{expense.description}}</div>
+            @for (unique of getUniqueItemsForRow(group.entries); track unique.items.toLowerCase()) {
+              <div class="fwe-chip">{{unique.items}}</div>
             }
           </td>
           <td class="tags-cell">
-            @for (expense of group.entries; track expense.description) {
-              <div class="fwe-chip">{{expense.amount}}</div>
+            @for (unique of getUniqueItemsForRow(group.entries); track unique.items.toLowerCase()) {
+              <div class="fwe-chip category-chip">{{unique.tags}}</div>
+            }
+          </td>
+          <td class="tags-cell">
+            @for (unique of getUniqueItemsForRow(group.entries); track unique.items.toLowerCase()) {
+              <div class="fwe-chip">{{unique.amount.toFixed(2)}}</div>
             }
           </td>
           <td>{{ getTotalAmount(group.entries) }}</td>
@@ -76,7 +82,10 @@
             <tr class="child-row">
               <td>{{ expense.time }}</td>
               <td class="tags-cell">
-                <div class="fwe-chip">{{expense.description}}</div>
+                <div class="fwe-chip">{{expense.items}}</div>
+              </td>
+              <td class="tags-cell">
+                <div class="fwe-chip category-chip">{{expense.tags}}</div>
               </td>
               <td class="tags-cell">
                 <div class="fwe-chip">{{expense.amount}}</div>

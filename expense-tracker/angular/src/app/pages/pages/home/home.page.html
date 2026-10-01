@@ -1,46 +1,108 @@
-<div class="tracker-container fwe-d-flex fwe-justify-content-center fwe-align-item-center fwe-mt-6">
-    <div class="fwe-card padding-39">
+<div class="fwe-container fwe-d-flex fwe-justify-content-center fwe-align-item-center fwe-mt-6">
+  <div class="home-wrapper">
 
-        <!-- Clock Circle -->
-        <div class="outer-circle">
-            <div class="inner-circle">
-                <p class="today">{{ today }}</p>
-                <div class="fwe-d-flex">
-                    <div>
-                        <span class="time-value">{{ hours }}:</span>
-                        <br />
-                        <span class="time-unit">hr</span>
-                    </div>
-                    <div>
-                        <span class="time-value">{{ minutes }}:</span>
-                        <br />
-                        <span class="time-unit">min</span>
-                    </div>
-                    <div>
-                        <span class="time-value">{{ seconds }}<span class="period-label">{{ period }}</span></span>
-                        <br />
-                        <span class="time-unit">sec</span>
-                    </div>
-                </div>
-            </div>
+    <!-- Main Card -->
+    <div class="fwe-card home-card">
+
+      <!-- Date Pill -->
+      <div class="date-pill-wrapper">
+        <span class="date-pill">{{ today }}</span>
+      </div>
+
+      <!-- Item Input -->
+      <p class="fwe-mt-3 input-label">Item</p>
+      <div class=" tag-input-wrapper">
+        <i class="fwe-icon fwe-icon-edit tag-input-icon"></i>
+        <input
+          type="text"
+          class="tag-input-field"
+          [(ngModel)]="expenseItems"
+          placeholder="Add Item" />
+      </div>
+
+      <!-- Categories -->
+<div class="tags">
+  <p class="quick-tags-label">Categories</p>
+  <div class="quick-tags-scroll">
+
+    <button
+      type="button"
+      class="quick-tag-item"
+      [class.quick-tag-item--active]="selectedCategory === 'Food'"
+      (click)="selectCategory('Food')">
+      <i class="fa-solid fa-utensils quick-tag-icon"></i>
+      <span class="quick-tag-label">Food</span>
+    </button>
+
+    <button
+      type="button"
+      class="quick-tag-item"
+      [class.quick-tag-item--active]="selectedCategory === 'Travel'"
+      (click)="selectCategory('Travel')">
+      <i class="fa-solid fa-plane quick-tag-icon"></i>
+      <span class="quick-tag-label">Travel</span>
+    </button>
+
+    <button
+      type="button"
+      class="quick-tag-item"
+      [class.quick-tag-item--active]="selectedCategory === 'Bills'"
+      (click)="selectCategory('Bills')">
+      <i class="fa-solid fa-file-invoice-dollar quick-tag-icon"></i>
+      <span class="quick-tag-label">Bills</span>
+    </button>
+
+    <button
+      type="button"
+      class="quick-tag-item"
+      [class.quick-tag-item--active]="selectedCategory === 'Shopping'"
+      (click)="selectCategory('Shopping')">
+      <i class="fa-solid fa-cart-shopping quick-tag-icon"></i>
+      <span class="quick-tag-label">Shopping</span>
+    </button>
+
+  </div>
+</div>
+
+      <!-- Amount Input -->
+      <div class="fwe-mt-3">
+        <p class="amount-label">Amount spent</p>
+        <div class="amount-input-wrapper">
+          <span class="amount-currency">₹</span>
+          <input
+            type="number"
+            class="amount-input-field"
+            [(ngModel)]="expenseAmount"
+            placeholder="0.00" />
         </div>
+      </div>
 
-        <!-- Input 1: What did you spend on -->
-        <div class="session-input-stopped">
-            <input type="text" class="tag-input" [(ngModel)]="expenseDescription"
-                placeholder="What did you spend on?" />
-        </div>
-
-        <!-- Input 2: How much did you spend -->
-        <div class="session-input-stopped">
-            <input type="number" class="tag-input" [(ngModel)]="expenseAmount" placeholder="Amount spent" />
-        </div>
-
-        <!-- Add Button -->
-        <div class="fwe-d-flex fwe-justify-content-center fwe-align-items-center fwe-mt-3">
+      <!-- Add Expense Button -->
+<div class="fwe-d-flex fwe-justify-content-center fwe-align-items-center fwe-mt-3">
             <button class="fwe-btn fwe-btn-hero" type="button" (click)="addExpense()">
                 Add
             </button>
         </div>
     </div>
+
+    <!-- Daily Spending Overview -->
+    <div class="overview-section">
+      <p class="overview-title">DAILY SPENDING OVERVIEW</p>
+      <div class="overview-cards">
+        <div class="overview-card">
+          <p class="overview-card-label">Today's Total:</p>
+          <p class="overview-card-value">₹{{ todaysTotal }}</p>
+        </div>
+        <div class="overview-card">
+          <p class="overview-card-label">This Week:</p>
+          <p class="overview-card-value">₹{{ weeklyTotal }}</p>
+        </div>
+        <div class="overview-card">
+          <p class="overview-card-label">Top Item:</p>
+          <p class="overview-card-value">{{ topItem }}</p>
+          <p class="overview-card-subvalue">(₹{{ topItemAmount }})</p>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

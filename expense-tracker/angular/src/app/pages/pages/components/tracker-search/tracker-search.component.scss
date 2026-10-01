@@ -18,6 +18,21 @@
   text-align: left !important;
 }
 
+.fwe-search-suggestions {
+  @media (max-width: 600px) {
+    width: 90vw !important; 
+    max-width: 320px;             
+    left: 50% !important;
+    transform: translateX(-50%);
+    right: auto !important;
+  }
+
+  @media (max-width: 400px) {
+    width: 85vw !important;
+    max-width: 280px;
+  }
+}
+
 .edit-input .fwe-search-input input {
   padding-left: 4px;
 }
