@@ -23,8 +23,12 @@ export class TrackerComponent {
   private readonly tabOrder: string[] = ['home', 'table', 'charts'];
 
   private touchStartX = 0;
+  private touchStartY = 0;
   private touchEndX = 0;
-  private readonly swipeThreshold = 50; // minimum px distance to count as a swipe
+  private touchEndY = 0;
+
+  private readonly swipeThreshold = 50;
+  private readonly directionRatio = 2;
 
   switchPanel(panelName: string): void {
     this.activeToolbar = panelName;
@@ -32,28 +36,34 @@ export class TrackerComponent {
 
   onTouchStart(event: TouchEvent): void {
     this.touchStartX = event.changedTouches[0].screenX;
+    this.touchStartY = event.changedTouches[0].screenY;
   }
 
   onTouchEnd(event: TouchEvent): void {
     this.touchEndX = event.changedTouches[0].screenX;
+    this.touchEndY = event.changedTouches[0].screenY;
     this.handleSwipeGesture();
   }
 
   private handleSwipeGesture(): void {
     const deltaX = this.touchEndX - this.touchStartX;
+    const deltaY = this.touchEndY - this.touchStartY;
 
-    if (Math.abs(deltaX) < this.swipeThreshold) {
-      return; // not a significant swipe
+    const absDeltaX = Math.abs(deltaX);
+    const absDeltaY = Math.abs(deltaY);
+
+    if (absDeltaX < this.swipeThreshold) {
+      return;
+    }
+    if (absDeltaX < absDeltaY * this.directionRatio) {
+      return;
     }
 
     const currentIndex = this.tabOrder.indexOf(this.activeToolbar);
 
-    if (deltaX < 0) {
-      // swiped LEFT → go to NEXT tab
-      const nextIndex = Math.min(currentIndex + 1, this.tabOrder.length - 1);
+    if (deltaX < 0) {      const nextIndex = Math.min(currentIndex + 1, this.tabOrder.length - 1);
       this.activeToolbar = this.tabOrder[nextIndex];
     } else {
-      // swiped RIGHT → go to PREVIOUS tab
       const prevIndex = Math.max(currentIndex - 1, 0);
       this.activeToolbar = this.tabOrder[prevIndex];
     }
