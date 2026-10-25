@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { GlobalNav } from '../components/global-nav/global-nav';
 import { HomeComponent } from './pages/home/home.page';
 import { TableComponent } from './pages/table/table.page';
@@ -30,16 +30,40 @@ export class TrackerComponent {
   private readonly swipeThreshold = 50;
   private readonly directionRatio = 2;
 
+  private readonly swipeExcludedSelectors = [
+    '.quick-tags-scroll',
+    '.overview-cards',
+    '.fwe-table',
+    '.tags-cell',
+    // '.filter-tag'
+  ];
+
+  private isSwipeExcludedZone = false;
+
   switchPanel(panelName: string): void {
     this.activeToolbar = panelName;
   }
 
   onTouchStart(event: TouchEvent): void {
+    const target = event.target as HTMLElement;
+
+    this.isSwipeExcludedZone = this.swipeExcludedSelectors.some(selector =>
+      target.closest(selector) !== null
+    );
+
+    if (this.isSwipeExcludedZone) {
+      return;
+    }
+
     this.touchStartX = event.changedTouches[0].screenX;
     this.touchStartY = event.changedTouches[0].screenY;
   }
 
   onTouchEnd(event: TouchEvent): void {
+    if (this.isSwipeExcludedZone) {
+      return;
+    }
+
     this.touchEndX = event.changedTouches[0].screenX;
     this.touchEndY = event.changedTouches[0].screenY;
     this.handleSwipeGesture();
@@ -61,7 +85,8 @@ export class TrackerComponent {
 
     const currentIndex = this.tabOrder.indexOf(this.activeToolbar);
 
-    if (deltaX < 0) {      const nextIndex = Math.min(currentIndex + 1, this.tabOrder.length - 1);
+    if (deltaX < 0) {
+      const nextIndex = Math.min(currentIndex + 1, this.tabOrder.length - 1);
       this.activeToolbar = this.tabOrder[nextIndex];
     } else {
       const prevIndex = Math.max(currentIndex - 1, 0);
