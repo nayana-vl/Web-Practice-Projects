@@ -22,6 +22,7 @@
     "@capacitor/android": "8.5.2",
     "@capacitor/cli": "8.5.2",
     "@capacitor/core": "8.5.2",
+    "@capacitor/splash-screen": "8.0.2",
     "@festo-ui/angular": "11.1.0",
     "@festo-ui/icon-font": "3.0.0",
     "@festo-ui/web-essentials": "11.1.0",

@@ -15,6 +15,7 @@ export class HomeComponent implements OnInit {
 
   // ── Date (static display, no live timer) ─────────
   today: string = '';
+  todayDateKey: string = '';
 
   // ── Expense Inputs ───────────────────────────────
   expenseItems: string = '';
@@ -29,19 +30,31 @@ export class HomeComponent implements OnInit {
 
   private expenseService = inject(ExpenseService);
 
-  ngOnInit(): void {
-    this.setTodayDate();
-    this.refreshOverview();
-  }
+ngOnInit(): void {
+  this.setTodayDate();
 
-  private setTodayDate(): void {
-    const now = new Date();
-    this.today = now.toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric'
-    });
-  }
+  this.expenseService.loadExpenses(() => {
+    this.refreshOverview();
+  });
+}
+
+private setTodayDate(): void {
+  const now = new Date();
+
+  // Display date
+  this.todayDateKey = now.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric'
+  });
+
+  // Database date: YYYY-MM-DD
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, '0');
+  const day = String(now.getDate()).padStart(2, '0');
+
+  this.todayDateKey = `${year}-${month}-${day}`;
+}
 
   selectCategory(label: string): void {
     this.selectedCategory = label;
@@ -53,17 +66,17 @@ export class HomeComponent implements OnInit {
     }
 
     const now = new Date();
-    const time = now.toLocaleTimeString('en-US', {
-      hour: '2-digit',
-      minute: '2-digit',
-      second: '2-digit'
-    });
+    const time = [
+      String(now.getHours()).padStart(2, '0'),
+      String(now.getMinutes()).padStart(2, '0'),
+      String(now.getSeconds()).padStart(2, '0')
+    ].join(':');
 
     this.expenseService.addExpense({
       items:  this.expenseItems.trim(),
       tags:   this.selectedCategory,
       amount: this.expenseAmount,
-      date:   this.today,
+      date:   this.todayDateKey,
       time:   time
     });
 
@@ -79,7 +92,7 @@ export class HomeComponent implements OnInit {
     const allExpenses = this.expenseService.expenses();
 
     // ── Today's Total ─────────────────────────────
-    const todaysExpenses = allExpenses.filter(e => e.date === this.today);
+    const todaysExpenses = allExpenses.filter(e => e.date === this.todayDateKey);
     const todaysSum = todaysExpenses.reduce((sum, e) => sum + (parseFloat(e.amount) || 0), 0);
     this.todaysTotal = todaysSum.toFixed(2);
 
